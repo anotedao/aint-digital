@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 98%;
+    height: 80vh;
+    background-color: #1F1F1F;
+  }
+
+  .wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 1px;
+    height: 80vh;
+  }
+
+  .el {
+    position: absolute;
+    opacity: 1;
+    width: 2px;
+    height: 12vh;
+    margin-top: -12vh;
+    transform-origin: 50% 100%;
+    background: white;
+  }
+  
