@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs'
 import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.css' // Import precompiled Bootstrap css
+// import 'bootstrap/dist/css/bootstrap.css' // Import precompiled Bootstrap css
+import "bootswatch/dist/slate/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.css'
 import anime from 'animejs/lib/anime.es.js';
 
