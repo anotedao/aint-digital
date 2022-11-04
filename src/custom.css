@@ -13,15 +13,15 @@ body {
     align-items: center;
     flex-wrap: wrap;
     width: 1px;
-    height: 70vh;
+    height: 50vh;
 }
 
 .el {
     position: absolute;
     opacity: 1;
     width: 2px;
-    height: 20%;
-    margin-top: -20vh;
+    height: 15vh;
+    margin-top: -15vh;
     transform-origin: 50% 100%;
     background: white;
 }
@@ -34,12 +34,35 @@ body {
     background-color: #18A01D;
 }
 
-.shadow-my {
-    /* box-shadow: 0 1rem 3rem #FFFFFF2d !important; */
-    /* margin-top: 2vh; */
-    /* height: 96vh; */
+.myshadow {
+    /* box-shadow: 0 1rem 3rem #FFFFFF2d !important;
+    height: 80%;
+    background-color: #1B1B1B; */
 }
 
 #changeColor {
-    margin-top: -10vh;
+    /* margin-top: 6vh; */
+}
+
+.row-1 {
+    height: 50vh;
+}
+
+.row-2 {
+    height: 30vh;
+}
+
+.row-3 {
+    height: 19vh;
+}
+
+.navb {
+    font-size:calc(35px + 4vh);
+    /* font-size:min(200px, 10vw); */
+    margin-bottom: 1vh;
+    margin-top: 0;
+}
+
+.text-active {
+    color: #3458A5;
 }

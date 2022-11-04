@@ -1,12 +1,11 @@
 import Alpine from 'alpinejs'
 import 'bootstrap'
-// import 'bootstrap/dist/css/bootstrap.css' // Import precompiled Bootstrap css
 import "bootswatch/dist/slate/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.css'
 import anime from 'animejs/lib/anime.es.js';
 import $ from "jquery";
 
-window.Alpine = Alpine
+// window.Alpine = Alpine
 Alpine.start();
 
 const wrapperEl = document.querySelector('.wrapper');
@@ -39,7 +38,9 @@ function createEl(i) {
       });
     }
   });
-  wrapperEl.appendChild(el);
+  if (wrapperEl != null) {
+    wrapperEl.appendChild(el);
+  }
 };
 
 for (let i = 0; i < numberOfEls; i++) createEl(i);
@@ -58,3 +59,15 @@ $("#changeColor").on("click", function() {
         $(".el").addClass("red");
     }
 });
+
+function pulsate() {
+    if($(".wrapper").is(":visible")) {
+        $(".wrapper").fadeOut(pulsate);
+    } else {
+        $(".wrapper").fadeIn(function() {
+            setTimeout(pulsate, 3000);
+        });
+    }
+}
+
+// pulsate();
