@@ -20,7 +20,8 @@ body {
     position: absolute;
     opacity: 1;
     width: 2px;
-    height: 15vh;
+    height: 25vw;
+    max-height: 130px;
     margin-top: -15vh;
     transform-origin: 50% 100%;
     background: white;

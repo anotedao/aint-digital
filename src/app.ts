@@ -4,6 +4,8 @@ import "bootswatch/dist/slate/bootstrap.min.css";
 import '@fortawesome/fontawesome-free/css/all.css'
 import anime from 'animejs/lib/anime.es.js';
 import $ from "jquery";
+import {manifest, version} from '@parcel/service-worker';
+
 
 // window.Alpine = Alpine
 Alpine.start();
@@ -70,4 +72,52 @@ function pulsate() {
     }
 }
 
-// pulsate();
+$("#startMiner").on("click", function() {
+    $(this).blur();
+    if ($(".el").hasClass("red")) {
+        tl.play();
+        $(".el").removeClass("red");
+        $(".el").addClass("green");
+    } else {
+        tl.pause();
+        $(".el").removeClass("green");
+        $(".el").addClass("red");
+    }
+
+    MyJavascriptInterface.startMiner();
+});
+
+$("#stopMiner").on("click", function() {
+    $(this).blur();
+    if ($(".el").hasClass("red")) {
+        tl.play();
+        $(".el").removeClass("red");
+        $(".el").addClass("green");
+    } else {
+        tl.pause();
+        $(".el").removeClass("green");
+        $(".el").addClass("red");
+    }
+
+    MyJavascriptInterface.stopMiner();
+});
+
+function run() {
+    $(this).blur();
+    if ($(".el").hasClass("red")) {
+        tl.play();
+        $(".el").removeClass("red");
+        $(".el").addClass("green");
+    } else {
+        tl.pause();
+        $(".el").removeClass("green");
+        $(".el").addClass("red");
+    }
+}
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+if (urlParams.get('run') == 'true') {
+    run();
+}
