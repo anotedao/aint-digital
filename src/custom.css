@@ -22,7 +22,7 @@ body {
     width: 2px;
     height: 25vw;
     max-height: 130px;
-    margin-top: -15vh;
+    margin-top: -25vh;
     transform-origin: 50% 100%;
     background: white;
 }
@@ -45,8 +45,12 @@ body {
     /* margin-top: 6vh; */
 }
 
+.row-0 {
+    height: 8vh;
+}
+
 .row-1 {
-    height: 50vh;
+    height: 40vh;
 }
 
 .row-2 {
@@ -54,7 +58,7 @@ body {
 }
 
 .row-3 {
-    height: 19vh;
+    height: 18vh;
 }
 
 .navb {
@@ -64,6 +68,28 @@ body {
     margin-top: 0;
 }
 
+.navt {
+    font-size: 2em;
+}
+
 .text-active {
     color: #3458A5;
+}
+
+.mycontainer {
+    width: 100%;
+    max-width: 600px;
+    min-height: -webkit-fill-available;
+    padding: 20px;
+}
+
+#backButton i {
+    font-size: 2em;
+}
+
+.captcha-holder {
+    background-color: #FFFFFF;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+    padding: 1em;
 }

@@ -8,66 +8,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="custom.css">
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
 </head>
 <body>
 
-    <div class="container">
-        <div class="row align-items-start row-1">
-            <div class="col text-center">
-                <div class="d-flex justify-content-center">
-                    <div class="wrapper"></div>
+    <div class="mycontainer vh-100">
+        <div class="row align-items-start row-0">
+            <div class="col text-start">
+                <a href="#profile" id="profileButton"><i class="fa-solid fa-circle-user navt text-secondary"></i></a>
+            </div>
+            <div class="col text-end">
+                <a href="https://t.me/AnoteDigital" target="_blank"><i class="fa-solid fa-circle-question navt text-secondary"></i></a>
+            </div>
+        </div>
+        <div id="mainView">
+            <div class="row align-items-start row-1">
+                <div class="col text-center">
+                    <div class="d-flex justify-content-center">
+                        <div class="wrapper"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center row-2">
+                <div class="col text-center myshadow">
+                    <!-- fdsfdsafasd -->
+                </div>
+            </div>
+            <div class="row align-items-end row-3">
+                <div class="col text-start ps-4">
+                    <a href="#" id="startMiner">
+                        <i class="fa-solid fa-oil-well navb text-secondary"></i>
+                    </a>
+                </div>
+                <div class="col text-end pe-4">
+                    <a href="#" id="stopMiner">
+                        <i class="fa-regular fa-circle-stop navb text-secondary text-danger"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="row align-items-center row-2">
-            <div class="col text-center myshadow">
-                <!-- fdsfdsafasd -->
+        <div  id="profileView" style="display: none;">
+            <div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Your Anote Address</label>
+                    <input type="text" class="form-control" id="address" aria-describedby="address">
+                    <div id="addressMessage" class="form-text text-danger" style="display: none;">Address field is required.</div>
+                </div>
+                <button id="addressButton" class="btn btn-primary">Save Address</button>
+            </div>
+            <div class="mt-5"> 
+                <a href="#" id="backButton">
+                    <i class="fa-solid fa-circle-chevron-left text-secondary"></i>
+                </a>
             </div>
         </div>
-        <div class="row align-items-end row-3">
-            <!-- <div class="col ms-2">
-                <i id="changeColor" class="fa-solid fa-oil-well navb text-active"></i>
-            </div>
-            <div class="col text-center">
-                <i id="notifications" class="fa-solid fa-plug-circle-bolt navb"></i>
-            </div>
-            <div class="col text-center">
-                <i class="fa fa-server navb"></i>
-            </div>
-            <div class="col text-end me-2">
-                <i class="fa-solid fa-wallet navb"></i>
-            </div> -->
-            <div class="col text-center">
-                <i class="fa-solid fa-plug-circle-bolt navb" id="startMiner"></i>
-            </div>
-            <div class="col text-center">
-                <i class="fa fa-server navb" id="stopMiner"></i>
+        <div  id="mineView" style="display: none;">
+            <div>
+                <div class="mb-3">
+                    <label for="code" class="form-label"><strong>Daily Mining Code</strong></label>
+                    <input type="text" class="form-control" id="code" aria-describedby="code">
+                </div>
+                <label for="captcha" class="form-label"><strong>Captcha</strong> (click to reload)</label>
+                <div class="mb-3 text-center captcha-holder">
+                    <a class="captcha" href="javascript:" tabindex="-1">
+                        <img class="captcha-img" id="captcha-img">
+                    </a>
+                </div>
+                <div class="mb-3">
+                    <label for="captcha" class="form-label"><strong>Retype Captcha</strong></label>
+                    <input type="text" class="form-control" id="captcha" aria-describedby="captcha">
+                </div>
+                <div class="row p-0">
+                    <div class="col text-end pt-2 mt-3 mb-3 d-grid">
+                        <button class="btn btn-lg btn-success btn-block" id="buttonMine">
+                            <i class="bi bi-hammer"></i>&nbsp;&nbsp;<span data-t>Mine Anote</span>
+                        </button>
+                    </div>
+                    <div class="col text-end pt-2 mt-3 mb-3 d-grid">
+                        <a class="btn btn-lg btn-secondary btn-block" id="buttonCode"
+                            href="https://t.me/AnoteToday" target="_blank">
+                            <i class="bi bi-telegram"></i>&nbsp;&nbsp;<span data-t>Get Code</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- <div class="container vh-100">
-        <div class="d-flex justify-content-center">
-            <div class="wrapper"></div>
-        </div>
-        <div class="text-center">
-            <button id="changeColor" class="btn btn-secondary px-5">Click Here</button>
-        </div>
-
-        <div class="row align-items-start">
-          <div class="row align-items-end">
-            <div class="col">
-              One of three columns
-            </div>
-            <div class="col text-center">
-              One of three columns
-            </div>
-            <div class="col text-end">
-              One of three columns
-            </div>
-          </div>
-          </div>
-    </div> -->
 
      <!-- <div x-data="{ count: 0 }">
         <button x-on:click="alert('fdsfasd')">Increment</button>
