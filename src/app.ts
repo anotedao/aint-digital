@@ -60,6 +60,25 @@ function pulsate() {
 
 var isMining = true;
 var address = localStorage.getItem("address");
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+var isServiceMining = urlParams.get('run') == 'true';
+
+var nativeApp = false;
+
+if (urlParams.get('app') == 'true') {
+    nativeApp = true;
+}
+
+if (address && address.length > 0) {
+    $("#address").val(address);
+    try {
+        MyJavascriptInterface.saveAddress(address);
+    } catch (e: any) {}
+}
+
+var mobileNodeUrl = "https://mobile.anote.digital";
+var captchaId = "";
 
 $.getJSON("https://nodes.anote.digital/node/status", function (data) {
     var currentHeight = data.blockchainHeight;
@@ -74,9 +93,12 @@ $.getJSON("https://nodes.anote.digital/node/status", function (data) {
                 var miningHeight = 0;
             }
 
-            if (currentHeight - miningHeight <= 1410) {
+            if (currentHeight - miningHeight <= 1410 && isServiceMining){
                 startMiner();
-            } else {
+                if (!nativeApp) {
+                    startMiningWeb();
+                }
+            } else if (currentHeight - miningHeight > 1410) {
                 isMining = false;
                 $("#mainView").hide();
                 $("#mineView").show();
@@ -92,6 +114,10 @@ $("#startMiner").on("click", function() {
     try {
         MyJavascriptInterface.startMiner();
     } catch (e: any) {}
+
+    if (!nativeApp) {
+        startMiningWeb();
+    }
 });
 
 $("#stopMiner").on("click", function() {
@@ -101,6 +127,10 @@ $("#stopMiner").on("click", function() {
     try {
         MyJavascriptInterface.stopMiner();
     } catch (e: any) {}
+
+    if (!nativeApp) {
+        stopMiningWeb();
+    }
 });
 
 function startMiner() {
@@ -113,13 +143,6 @@ function stopMiner() {
     tl.pause();
     $("#startMiner > i").removeClass("text-success");
     $("#stopMiner > i").addClass("text-danger");
-}
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-
-if (urlParams.get('run') == 'true') {
-    startMiner();
 }
 
 $("#profileButton").on("click", function() {
@@ -166,17 +189,6 @@ $("#addressButton").on("click", function() {
         } catch (e: any) {}
     }
 });
-
-var address = localStorage.getItem("address");
-if (address && address.length > 0) {
-    $("#address").val(address);
-    try {
-        MyJavascriptInterface.saveAddress(address);
-    } catch (e: any) {}
-}
-
-var mobileNodeUrl = "https://mobile.anote.digital";
-var captchaId = "";
 
 $.getJSON(mobileNodeUrl + "/new-captcha/" + address, function (data) {
     $("#captcha-img").attr("src", data.image);
@@ -259,3 +271,17 @@ $("#buttonMine").on("click", function() {
 $.getJSON("https://nodes.anote.digital/addresses/data/3ANmnLHt8mR9c36mdfQVpBtxUs8z1mMAHQW/%25s__adnum", function (data) {
     $("#buttonCode").attr("href", "https://t.me/AnoteToday/" + data.value);
 });
+
+var interval = 0;
+
+function startMiningWeb() {
+    interval = setInterval(function() {
+        $.getJSON("https://mobile.anote.digital/mine/" + address, function (data) {
+            console.log(data);
+        });
+    }, 60000);
+}
+
+function stopMiningWeb() {
+    clearInterval(interval);
+}
