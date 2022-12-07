@@ -95,8 +95,13 @@ $.getJSON("https://nodes.anote.digital/node/status", function (data) {
 
             if (currentHeight - miningHeight <= 1410 && isServiceMining){
                 startMiner();
+
                 if (!nativeApp) {
                     startMiningWeb();
+                } else {
+                    try {
+                        MyJavascriptInterface.startMiner();
+                    } catch (e: any) {}
                 }
             } else if (currentHeight - miningHeight > 1410) {
                 isMining = false;
