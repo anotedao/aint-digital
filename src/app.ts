@@ -87,8 +87,8 @@ $.getJSON("https://node.anote.digital/node/status", function (data) {
             var miningData = data[0].value;
             var mdSplit = miningData.split("__")
 
-            if (mdSplit.length >= 3) {
-                var miningHeight = parseInt(miningData.split("__")[2]);
+            if (mdSplit.length >= 2) {
+                var miningHeight = parseInt(miningData.split("__")[1]);
             } else {
                 var miningHeight = 0;
             }
