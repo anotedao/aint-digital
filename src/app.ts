@@ -108,6 +108,10 @@ $.getJSON("https://node.anote.digital/node/status", function (data) {
                 $("#mainView").hide();
                 $("#mineView").show();
             }
+        } else {
+            isMining = false;
+            $("#mainView").hide();
+            $("#mineView").show();
         }
     });
 });
