@@ -80,9 +80,9 @@ if (address && address.length > 0) {
 var mobileNodeUrl = "https://mobile.anote.digital";
 var captchaId = "";
 
-$.getJSON("https://nodes.anote.digital/node/status", function (data) {
+$.getJSON("https://node.anote.digital/node/status", function (data) {
     var currentHeight = data.blockchainHeight;
-    $.getJSON("https://nodes.anote.digital/addresses/data/3ANzidsKXn9a1s9FEbWA19hnMgV9zZ2RB9a?key=" + address, function (data) {
+    $.getJSON("https://node.anote.digital/addresses/data/3ANzidsKXn9a1s9FEbWA19hnMgV9zZ2RB9a?key=" + address, function (data) {
         if (data.length > 0) {
             var miningData = data[0].value;
             var mdSplit = miningData.split("__")
@@ -273,7 +273,7 @@ $("#buttonMine").on("click", function() {
     }
 });
 
-$.getJSON("https://nodes.anote.digital/addresses/data/3ANmnLHt8mR9c36mdfQVpBtxUs8z1mMAHQW/%25s__adnum", function (data) {
+$.getJSON("https://node.anote.digital/addresses/data/3ANmnLHt8mR9c36mdfQVpBtxUs8z1mMAHQW/%25s__adnum", function (data) {
     $("#buttonCode").attr("href", "https://t.me/AnoteToday/" + data.value);
 });
 
