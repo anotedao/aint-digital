@@ -72,6 +72,22 @@ if (urlParams.get('app') == 'true') {
 
 if (address && address.length > 0) {
     $("#address").val(address);
+
+    $.getJSON("https://mobile.anote.digital/mine/" + address, function (data) {
+        console.log(data.health);
+        $("#healthProgress").width(data.health + "%");
+        $("#healthPercentage").html(data.health);
+
+        if (parseInt(data.health) <= 66) {
+            $("#healthProgress").removeClass("bg-success");
+            if (parseInt(data.health) <= 33) {
+                $("#healthProgress").addClass("bg-danger");
+            } else {
+                $("#healthProgress").addClass("bg-warning");
+            }
+        }
+    });
+
     try {
         MyJavascriptInterface.saveAddress(address);
     } catch (e: any) {}

@@ -22,7 +22,7 @@ body {
     width: 2px;
     height: 25vw;
     max-height: 130px;
-    margin-top: -25vh;
+    margin-top: -20vh;
     transform-origin: 50% 100%;
     background: white;
 }
