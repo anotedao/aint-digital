@@ -63,6 +63,8 @@ var address = localStorage.getItem("address");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var isServiceMining = urlParams.get('run') == 'true';
+var mobileNodeUrl = "https://mobile.anote.digital";
+var captchaId = "";
 
 var nativeApp = false;
 
@@ -97,9 +99,6 @@ if (address && address.length > 0) {
     $("#mainView").hide();
     $("#profileView").show();
 }
-
-var mobileNodeUrl = "https://mobile.anote.digital";
-var captchaId = "";
 
 function loadMinerData() {
     $.getJSON("https://node.anote.digital/node/status", function (data) {
@@ -251,7 +250,7 @@ $("#buttonMine").on("click", function() {
 
         $.getJSON(mobileNodeUrl + "/mine/" + address + "/" + captchaId + "/" + captcha + "/" + code + ref, function (data) {
             if (data.error == 1) {
-                $("#errorMessage").html(t.bank.wrongCaptcha);
+                $("#errorMessage").html("Captcha code is wrong, please try again.");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();
@@ -260,7 +259,7 @@ $("#buttonMine").on("click", function() {
                 $("#captcha-img").click();
                 navigator.vibrate(500);
             } else if (data.error == 2) {
-                $("#errorMessage").html(t.bank.wrongCode);
+                $("#errorMessage").html("Mining code is wrong, please try again.");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();
@@ -269,7 +268,7 @@ $("#buttonMine").on("click", function() {
                 $("#captcha-img").click();
                 navigator.vibrate(500);
             } else if (data.error == 3) {
-                $("#errorMessage").html(t.bank.otherError);
+                $("#errorMessage").html("An error happened. Please try again!");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();
@@ -278,7 +277,7 @@ $("#buttonMine").on("click", function() {
                 $("#captcha-img").click();
                 navigator.vibrate(500);
             } else if (data.error == 4) {
-                $("#errorMessage").html(t.bank.ipError);
+                $("#errorMessage").html("Sorry, there are too many miners on a single Internet connection.");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();
