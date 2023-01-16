@@ -73,6 +73,8 @@ if (urlParams.get('app') == 'true') {
 if (address && address.length > 0) {
     $("#address").val(address);
 
+    loadMinerData();
+
     $.getJSON("https://mobile.anote.digital/mine/" + address, function (data) {
         console.log(data.health);
         $("#healthProgress").width(data.health + "%");
@@ -91,46 +93,57 @@ if (address && address.length > 0) {
     try {
         MyJavascriptInterface.saveAddress(address);
     } catch (e: any) {}
+} else {
+    $("#mainView").hide();
+    $("#profileView").show();
 }
 
 var mobileNodeUrl = "https://mobile.anote.digital";
 var captchaId = "";
 
-$.getJSON("https://node.anote.digital/node/status", function (data) {
-    var currentHeight = data.blockchainHeight;
-    $.getJSON("https://node.anote.digital/addresses/data/3ANzidsKXn9a1s9FEbWA19hnMgV9zZ2RB9a?key=" + address, function (data) {
-        if (data.length > 0) {
-            var miningData = data[0].value;
-            var mdSplit = miningData.split("__")
+function loadMinerData() {
+    $.getJSON("https://node.anote.digital/node/status", function (data) {
+        var currentHeight = data.blockchainHeight;
+        $.getJSON("https://node.anote.digital/addresses/data/3ANzidsKXn9a1s9FEbWA19hnMgV9zZ2RB9a?key=" + address, function (data) {
+            if (data.length > 0) {
+                var miningData = data[0].value;
+                var mdSplit = miningData.split("__")
 
-            if (mdSplit.length >= 2) {
-                var miningHeight = parseInt(miningData.split("__")[1]);
-            } else {
-                var miningHeight = 0;
-            }
-
-            if (currentHeight - miningHeight <= 1410 && isServiceMining){
-                startMiner();
-
-                if (!nativeApp) {
-                    startMiningWeb();
+                if (mdSplit.length >= 2) {
+                    var miningHeight = parseInt(miningData.split("__")[1]);
                 } else {
-                    try {
-                        MyJavascriptInterface.startMiner();
-                    } catch (e: any) {}
+                    var miningHeight = 0;
                 }
-            } else if (currentHeight - miningHeight > 1410) {
+
+                if (currentHeight - miningHeight <= 1410 && isServiceMining){
+                    startMiner();
+
+                    if (!nativeApp) {
+                        startMiningWeb();
+                    } else {
+                        try {
+                            MyJavascriptInterface.startMiner();
+                        } catch (e: any) {}
+                    }
+                } else if (currentHeight - miningHeight > 1410) {
+                    isMining = false;
+                    $("#mainView").hide();
+                    $("#mineView").show();
+                }
+            } else {
                 isMining = false;
                 $("#mainView").hide();
                 $("#mineView").show();
             }
-        } else {
-            isMining = false;
-            $("#mainView").hide();
-            $("#mineView").show();
-        }
+        });
     });
-});
+
+    $.getJSON(mobileNodeUrl + "/new-captcha/" + address, function (data) {
+        $("#captcha-img").attr("src", data.image);
+        $("#captcha-img").attr("onclick", "this.src=('" + data.image + "?reload='+(new Date()).getTime())");
+        captchaId = data.id;
+    });
+}
 
 $("#startMiner").on("click", function() {
     $(this).blur();
@@ -213,12 +226,6 @@ $("#addressButton").on("click", function() {
             MyJavascriptInterface.saveAddress(address);
         } catch (e: any) {}
     }
-});
-
-$.getJSON(mobileNodeUrl + "/new-captcha/" + address, function (data) {
-    $("#captcha-img").attr("src", data.image);
-    $("#captcha-img").attr("onclick", "this.src=('" + data.image + "?reload='+(new Date()).getTime())");
-    captchaId = data.id;
 });
 
 $("#buttonMine").on("click", function() {

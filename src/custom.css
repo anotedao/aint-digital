@@ -93,3 +93,7 @@ body {
     border-radius: .375rem;
     padding: 1em;
 }
+
+.progress {
+    margin-top: -7vh;
+}
