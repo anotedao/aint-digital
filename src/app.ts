@@ -77,20 +77,7 @@ if (address && address.length > 0) {
 
     loadMinerData();
 
-    $.getJSON("https://mobile.anote.digital/mine/" + address, function (data) {
-        console.log(data.health);
-        $("#healthProgress").width(data.health + "%");
-        $("#healthPercentage").html(data.health);
-
-        if (parseInt(data.health) <= 66) {
-            $("#healthProgress").removeClass("bg-success");
-            if (parseInt(data.health) <= 33) {
-                $("#healthProgress").addClass("bg-danger");
-            } else {
-                $("#healthProgress").addClass("bg-warning");
-            }
-        }
-    });
+    loadHealth();
 
     try {
         MyJavascriptInterface.saveAddress(address);
@@ -141,6 +128,24 @@ function loadMinerData() {
         $("#captcha-img").attr("src", data.image);
         $("#captcha-img").attr("onclick", "this.src=('" + data.image + "?reload='+(new Date()).getTime())");
         captchaId = data.id;
+    });
+}
+
+function loadHealth() {
+    $.getJSON("https://mobile.anote.digital/health/" + address, function (data) {
+        console.log(data.health);
+        $("#healthProgress").width(data.health + "%");
+        $("#healthPercentage").html(data.health);
+
+        if (parseInt(data.health) <= 66) {
+            $("#healthProgress").removeClass("bg-success");
+            if (parseInt(data.health) <= 33) {
+                $("#healthProgress").addClass("bg-danger");
+            } else {
+                $("#healthProgress").addClass("bg-warning");
+            }
+        }
+        setTimeout(loadHealth, 30000);
     });
 }
 
