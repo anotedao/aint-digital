@@ -215,20 +215,28 @@ $("#addressButton").on("click", function() {
         $("#addressMessage").fadeIn(function() {
             setTimeout(function() {
                 $("#addressMessage").fadeOut();
-            }, 1000);
+            }, 3000);
         });
     } else {
-        localStorage.setItem("address", address);
-        $("#profileView").fadeOut(function() {
-            if (isMining) {
-                $("#mainView").fadeIn();
-            } else {
-                $("#mineView").fadeIn();
-            }
-        });
-        try {
-            MyJavascriptInterface.saveAddress(address);
-        } catch (e: any) {}
+        if (!address.startsWith("3A")) {
+            $("#addressMessage1").fadeIn(function() {
+                setTimeout(function() {
+                    $("#addressMessage1").fadeOut();
+                }, 3000);
+            });
+        } else {
+            localStorage.setItem("address", address);
+            $("#profileView").fadeOut(function() {
+                if (isMining) {
+                    $("#mainView").fadeIn();
+                } else {
+                    $("#mineView").fadeIn();
+                }
+            });
+            try {
+                MyJavascriptInterface.saveAddress(address);
+            } catch (e: any) {}
+        }
     }
 });
 
