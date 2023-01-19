@@ -58,7 +58,7 @@ function pulsate() {
     }
 }
 
-var isMining = false;
+var isMiningScreen = false;
 var address = localStorage.getItem("address");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -102,7 +102,10 @@ function loadMinerData() {
                     var miningHeight = 0;
                 }
 
+                console.log(currentHeight);
+
                 if (currentHeight - miningHeight <= 1410 && isServiceMining){
+                    isMiningScreen = true;
                     startMiner();
 
                     $("#mainView").fadeIn();
@@ -110,17 +113,20 @@ function loadMinerData() {
                     if (!nativeApp) {
                         startMiningWeb();
                     } else {
-                        console.log("staring miner");
+                        console.log("starting miner");
                         try {
                             MyJavascriptInterface.startMiner();
                         } catch (e: any) {}
                     }
                 } else if (currentHeight - miningHeight > 1410) {
-                    isMining = false;
+                    isMiningScreen = false;
                     $("#mineView").show();
+                } else if (!isServiceMining) {
+                    isMiningScreen = true;
+                    $("#mainView").fadeIn();
                 }
             } else {
-                isMining = false;
+                isMiningScreen = false;
                 $("#mineView").show();
             }
         });
@@ -135,7 +141,6 @@ function loadMinerData() {
 
 function loadHealth() {
     $.getJSON("https://mobile.anote.digital/health/" + address, function (data) {
-        console.log(data.health);
         $("#healthProgress").width(data.health + "%");
         $("#healthPercentage").html(data.health);
 
@@ -194,7 +199,7 @@ function stopMiner() {
 }
 
 $("#profileButton").on("click", function() {
-    if (isMining) {
+    if (isMiningScreen) {
         $("#mainView").fadeOut(function() {
             $("#profileView").fadeIn();
         });
@@ -207,7 +212,7 @@ $("#profileButton").on("click", function() {
 
 $("#backButton").on("click", function() {
     $("#profileView").fadeOut(function() {
-        if (isMining) {
+        if (isMiningScreen) {
             $("#mainView").fadeIn();
         } else {
             $("#mineView").fadeIn();
@@ -302,7 +307,7 @@ $("#buttonMine").on("click", function() {
                 });
                 navigator.vibrate(500);
             } else if (data.success) {
-                isMining = true;
+                isMiningScreen = true;
                 if (isServiceMining) {
                     startMiner();
                     $("#mineView").fadeOut(function () {
