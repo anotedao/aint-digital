@@ -72,7 +72,7 @@ if (urlParams.get('app') == 'true') {
     nativeApp = true;
 }
 
-if (address && address.length > 0) {
+if (address && address.length > 0 && address.startsWith("3A")) {
     $("#address").val(address);
 
     loadMinerData();
