@@ -58,7 +58,7 @@ function pulsate() {
     }
 }
 
-var isMining = true;
+var isMining = false;
 var address = localStorage.getItem("address");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -233,11 +233,7 @@ $("#addressButton").on("click", function() {
             localStorage.setItem("address", address);
             $("#profileView").fadeOut(function() {
                 $("#backButton").show();
-                if (isMining) {
-                    $("#mainView").fadeIn();
-                } else {
-                    $("#mineView").fadeIn();
-                }
+                loadMinerData();
             });
             try {
                 MyJavascriptInterface.saveAddress(address);
