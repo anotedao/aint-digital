@@ -105,21 +105,22 @@ function loadMinerData() {
                 if (currentHeight - miningHeight <= 1410 && isServiceMining){
                     startMiner();
 
+                    $("#mainView").fadeIn();
+
                     if (!nativeApp) {
                         startMiningWeb();
                     } else {
+                        console.log("staring miner");
                         try {
                             MyJavascriptInterface.startMiner();
                         } catch (e: any) {}
                     }
                 } else if (currentHeight - miningHeight > 1410) {
                     isMining = false;
-                    $("#mainView").hide();
                     $("#mineView").show();
                 }
             } else {
                 isMining = false;
-                $("#mainView").hide();
                 $("#mineView").show();
             }
         });
@@ -215,7 +216,7 @@ $("#backButton").on("click", function() {
 });
 
 $("#addressButton").on("click", function() {
-    var address = $("#address").val();
+    address = $("#address").val();
     if (!address || address.length == 0) {
         $("#addressMessage").fadeIn(function() {
             setTimeout(function() {
@@ -233,11 +234,12 @@ $("#addressButton").on("click", function() {
             localStorage.setItem("address", address);
             $("#profileView").fadeOut(function() {
                 $("#backButton").show();
-                loadMinerData();
             });
             try {
                 MyJavascriptInterface.saveAddress(address);
             } catch (e: any) {}
+
+            loadMinerData();
         }
     }
 });
@@ -300,15 +302,34 @@ $("#buttonMine").on("click", function() {
                 });
                 navigator.vibrate(500);
             } else if (data.success) {
-                startMiner();
-                $("#mineView").fadeOut(function () {
-                    $("#mainView").fadeIn();
-                    navigator.vibrate(1000);
-                });
+                isMining = true;
+                if (isServiceMining) {
+                    startMiner();
+                    $("#mineView").fadeOut(function () {
+                        $("#mainView").fadeIn();
+                        navigator.vibrate(1000);
+                    });
+    
+                    try {
+                        MyJavascriptInterface.startMinerNotification();
+                    } catch (e: any) {}
+                } else {
+                    startMiner();
 
-                try {
-                    MyJavascriptInterface.startMinerNotification();
-                } catch (e: any) {}
+                    $("#mineView").fadeOut(function () {
+                        $("#mainView").fadeIn();
+                        navigator.vibrate(1000);
+                    });
+
+                    if (!nativeApp) {
+                        startMiningWeb();
+                    } else {
+                        console.log("starting miner");
+                        try {
+                            MyJavascriptInterface.startMiner();
+                        } catch (e: any) {}
+                    }
+                }
             }
         });
     }
