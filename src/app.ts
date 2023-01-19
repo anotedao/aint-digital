@@ -137,14 +137,18 @@ function loadHealth() {
         $("#healthProgress").width(data.health + "%");
         $("#healthPercentage").html(data.health);
 
-        if (parseInt(data.health) <= 66) {
-            $("#healthProgress").removeClass("bg-success");
-            if (parseInt(data.health) <= 33) {
-                $("#healthProgress").addClass("bg-danger");
-            } else {
-                $("#healthProgress").addClass("bg-warning");
-            }
+        $("#healthProgress").removeClass("bg-success");
+        $("#healthProgress").removeClass("bg-danger");
+        $("#healthProgress").removeClass("bg-warning");
+
+        if (parseInt(data.health) > 66) {
+            $("#healthProgress").addClass("bg-success");
+        } else if (parseInt(data.health) > 33) {
+            $("#healthProgress").addClass("bg-warning");
+        } else {
+            $("#healthProgress").addClass("bg-danger");
         }
+        
         setTimeout(loadHealth, 30000);
     });
 }
