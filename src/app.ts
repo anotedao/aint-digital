@@ -84,6 +84,7 @@ if (address && address.length > 0) {
     } catch (e: any) {}
 } else {
     $("#mainView").hide();
+    $("#backButton").hide();
     $("#profileView").show();
 }
 
@@ -231,6 +232,7 @@ $("#addressButton").on("click", function() {
         } else {
             localStorage.setItem("address", address);
             $("#profileView").fadeOut(function() {
+                $("#backButton").show();
                 if (isMining) {
                     $("#mainView").fadeIn();
                 } else {
