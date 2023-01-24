@@ -67,17 +67,25 @@ var mobileNodeUrl = "https://mobile.anote.digital";
 var captchaId = "";
 
 var nativeApp = false;
+var update = false;
+var version = 'v1.0-beta2';
 
 if (urlParams.get('app') == 'true') {
     nativeApp = true;
 }
+
+if (urlParams.get('v') != version) {
+    update = true;
+}
+
+console.log(update);
 
 if (address && address.length > 0 && address.startsWith("3A")) {
     $("#address").val(address);
 
     loadMinerData();
 
-    loadHealth();
+    // loadHealth();
 
     try {
         MyJavascriptInterface.saveAddress(address);
@@ -101,8 +109,6 @@ function loadMinerData() {
                 } else {
                     var miningHeight = 0;
                 }
-
-                console.log(currentHeight);
 
                 if (currentHeight - miningHeight <= 1410 && isServiceMining){
                     isMiningScreen = true;
@@ -129,6 +135,8 @@ function loadMinerData() {
                 isMiningScreen = false;
                 $("#mineView").show();
             }
+
+            loadHealth();
         });
     });
 
@@ -154,6 +162,12 @@ function loadHealth() {
             $("#healthProgress").addClass("bg-warning");
         } else {
             $("#healthProgress").addClass("bg-danger");
+        }
+
+        if (update && !data.updated_app) {
+            $("#mainView").hide();
+            $("#profileButton").hide();
+            $("#updateView").show();
         }
         
         setTimeout(loadHealth, 30000);
@@ -300,6 +314,14 @@ $("#buttonMine").on("click", function() {
                 navigator.vibrate(500);
             } else if (data.error == 4) {
                 $("#errorMessage").html("Sorry, there are too many miners on a single Internet connection.");
+                $("#errorMessage").fadeIn(function () {
+                    setTimeout(function () {
+                        $("#errorMessage").fadeOut();
+                    }, 1000);
+                });
+                navigator.vibrate(500);
+            } else if (data.error == 5) {
+                $("#errorMessage").html("There is something wrong with your address. Copy it from anote.one wallet (green button).");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();

@@ -13,16 +13,17 @@ body {
     align-items: center;
     flex-wrap: wrap;
     width: 1px;
-    height: 50vh;
+    height: 60vh;
+    margin-top: -15vh;
 }
 
 .el {
     position: absolute;
     opacity: 1;
     width: 2px;
-    height: 25vw;
-    max-height: 130px;
-    margin-top: -20vh;
+    height: 15vh;
+    max-height: 110px;
+    /* margin-top: -60px; */
     transform-origin: 50% 100%;
     background: white;
 }
