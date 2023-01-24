@@ -166,6 +166,8 @@ function loadHealth() {
 
         if (update && !data.updated_app) {
             $("#mainView").hide();
+            $("#mineView").hide();
+            $("#profileView").hide();
             $("#profileButton").hide();
             $("#updateView").show();
         }
