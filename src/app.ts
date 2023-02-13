@@ -62,6 +62,7 @@ function pulsate() {
 
 var isMiningScreen = false;
 var address = localStorage.getItem("address");
+var seed = localStorage.getItem("seed");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var isServiceMining = urlParams.get('run') == 'true';
@@ -83,7 +84,7 @@ if (urlParams.get('v') != version) {
 console.log(update);
 
 if (address && address.length > 0 && address.startsWith("3A")) {
-    // $("#address").val(address);
+    $("#seed").val(seed);
 
     loadMinerData();
 
