@@ -248,45 +248,37 @@ $("#addressButton").on("click", async function() {
             }, 3000);
         });
     } else {
-        const signer = new Signer({
-            NODE_URL: 'https://node.anote.digital',
-        });
-        const provider = new ProviderSeed(seed.toString());
-        provider.connect({
-            NODE_URL: 'https://node.anote.digital',
-            NETWORK_BYTE: 55,
-        });
-        signer.setProvider(provider);
-        var user = await signer.login();
-        address = user.address;
+        var splits = seed.split(" ");
+        if (splits.length != 15) {
+            $("#addressMessage1").fadeIn(function() {
+                setTimeout(function() {
+                    $("#addressMessage1").fadeOut();
+                }, 3000);
+            });
+        } else {
+            const signer = new Signer({
+                NODE_URL: 'https://node.anote.digital',
+            });
+            const provider = new ProviderSeed(seed.toString());
+            provider.connect({
+                NODE_URL: 'https://node.anote.digital',
+                NETWORK_BYTE: 55,
+            });
+            signer.setProvider(provider);
+            var user = await signer.login();
+            address = user.address;
+    
+            localStorage.setItem("seed", seed);
+            localStorage.setItem("address", address);
 
-        localStorage.setItem("seed", seed);
-        localStorage.setItem("address", address);
-        // if (!address.startsWith("3A")) {
-        //     $("#addressMessage1").fadeIn(function() {
-        //         setTimeout(function() {
-        //             $("#addressMessage1").fadeOut();
-        //         }, 3000);
-        //     });
-        // } else {
-        //     localStorage.setItem("address", address);
-        //     $("#profileView").fadeOut(function() {
-        //         $("#backButton").show();
-        //     });
-        //     try {
-        //         MyJavascriptInterface.saveAddress(address);
-        //     } catch (e: any) {}
-
-        //     loadMinerData();
-        // }
-
-        $("#profileView").fadeOut(function() {
-            $("#backButton").show();
-            loadMinerData();
-        });
-        try {
-            MyJavascriptInterface.saveAddress(address);
-        } catch (e: any) {}
+            $("#profileView").fadeOut(function() {
+                $("#backButton").show();
+                loadMinerData();
+            });
+            try {
+                MyJavascriptInterface.saveAddress(address);
+            } catch (e: any) {}
+        }
     }
 });
 
