@@ -47,15 +47,15 @@ body {
 }
 
 .row-0 {
-    height: 8vh;
+    height: 5vh;
 }
 
 .row-1 {
-    height: 40vh;
+    height: 52vh;
 }
 
 .row-2 {
-    height: 30vh;
+    height: 21vh;
 }
 
 .row-3 {
@@ -88,6 +88,10 @@ body {
     font-size: 2em;
 }
 
+#backButtonRef i {
+    font-size: 2em;
+}
+
 .captcha-holder {
     background-color: #FFFFFF;
     border: 1px solid #ced4da;
@@ -96,5 +100,5 @@ body {
 }
 
 .progress {
-    margin-top: -7vh;
+    /* margin-top: -7vh; */
 }

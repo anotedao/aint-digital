@@ -71,6 +71,7 @@ var captchaId = "";
 
 var nativeApp = false;
 var update = false;
+var countdownStarted = false;
 var version = 'v1.0-beta2';
 
 if (urlParams.get('app') == 'true') {
@@ -80,8 +81,6 @@ if (urlParams.get('app') == 'true') {
 if (urlParams.get('v') != version) {
     update = true;
 }
-
-console.log(update);
 
 if (address && address.length > 0 && address.startsWith("3A")) {
     $("#seed").val(seed);
@@ -239,6 +238,13 @@ $("#backButton").on("click", function() {
     });
 });
 
+$("#backButtonRef").on("click", function() {
+    $("#referralView").fadeOut(function() {
+        $("#profileButton").fadeIn();
+        $("#mainView").fadeIn();
+    });
+});
+
 $("#addressButton").on("click", async function() {
     var seed = $("#seed").val();
     if (!seed || seed.length == 0) {
@@ -381,6 +387,13 @@ $("#buttonMine").on("click", function() {
     }
 });
 
+$("#referralButton").on("click", function() {
+    $("#profileButton").fadeOut();
+    $("#mainView").fadeOut(function() {
+        $("#referralView").fadeIn();
+    });
+});
+
 $.getJSON("https://node.anote.digital/addresses/data/3ANmnLHt8mR9c36mdfQVpBtxUs8z1mMAHQW/%25s__adnum", function (data) {
     $("#buttonCode").attr("href", "https://t.me/AnoteToday/" + data.value);
 });
@@ -398,3 +411,57 @@ function startMiningWeb() {
 function stopMiningWeb() {
     clearInterval(interval);
 }
+
+function startCountdown(seconds) {
+    if (!countdownStarted) {
+        countdownStarted = true;
+        setInterval(function () {
+            var countdown = "~ ";
+            seconds--;
+            var hours = Math.floor(seconds / 60 / 60);
+            if (hours < 10) {
+                countdown += "0";
+            }
+            countdown += hours + ":";
+            var minutes = Math.floor(seconds / 60) % 60;
+            if (minutes < 10) {
+                countdown += "0";
+            }
+            countdown += minutes + ":";
+            var sec = seconds % 60;
+            if (sec < 10) {
+                countdown += "0";
+            }
+            countdown += sec;
+            $("#countdown").html(countdown);
+        }, 1000);
+    }
+}
+
+function updateBlocks() {
+    $.getJSON("https://node.anote.digital/node/status", function (data) {
+        var currentHeight = data.blockchainHeight;
+        $.getJSON("https://node.anote.digital/addresses/data/3ANzidsKXn9a1s9FEbWA19hnMgV9zZ2RB9a?key=" + address, function (data) {
+            if (data.length > 0) {
+                var miningData = data[0].value;
+                var mdSplit = miningData.split("__")
+                if (mdSplit.length >= 2) {
+                    var miningHeight = parseInt(miningData.split("__")[1]);
+                } else {
+                    var miningHeight = 0;
+                }
+                if (currentHeight - miningHeight <= 1410) {
+                    var blocks = 1410 - currentHeight + miningHeight;
+                    var cycle = (currentHeight - miningHeight) / 1410 * 100;
+                    $("#cycleProgress").width(cycle + "%");
+                    $("#blocks").html(blocks?.toString());
+                    setTimeout(updateBlocks, 60000);
+                    var seconds = blocks * 60;
+                    startCountdown(seconds);
+                }
+            }
+        });
+    });
+}
+
+updateBlocks();
