@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import anime from 'animejs/lib/anime.es.js';
 import $ from "jquery";
 import {manifest, version} from '@parcel/service-worker';
+import copy from 'copy-to-clipboard';
 
 // window.Alpine = Alpine
 // Alpine.start();
@@ -87,6 +88,8 @@ if (address && address.length > 0 && address.startsWith("3A")) {
 
     loadMinerData();
 
+    setRefLink();
+
     // loadHealth();
 
     try {
@@ -96,6 +99,10 @@ if (address && address.length > 0 && address.startsWith("3A")) {
     $("#mainView").hide();
     $("#backButton").hide();
     $("#profileView").show();
+}
+
+function setRefLink() {
+    $("#refLink").val("https://anote.one/mine?r=" + address);
 }
 
 function loadMinerData() {
@@ -139,6 +146,8 @@ function loadMinerData() {
             }
 
             loadHealth();
+
+            updateBlocks();
         });
     });
 
@@ -355,6 +364,7 @@ $("#buttonMine").on("click", function() {
                 navigator.vibrate(500);
             } else if (data.success) {
                 isMiningScreen = true;
+                updateBlocks();
                 if (isServiceMining) {
                     startMiner();
                     $("#mineView").fadeOut(function () {
@@ -391,6 +401,16 @@ $("#referralButton").on("click", function() {
     $("#profileButton").fadeOut();
     $("#mainView").fadeOut(function() {
         $("#referralView").fadeIn();
+    });
+});
+
+$("#refCopyButton").on("click", function() {
+    var link = $("#refLink").val();
+    copy(String(link));
+    $("#copyMessage").fadeIn(function () {
+        setTimeout(function () {
+            $("#copyMessage").fadeOut();
+        }, 500);
     });
 });
 
@@ -463,5 +483,3 @@ function updateBlocks() {
         });
     });
 }
-
-updateBlocks();

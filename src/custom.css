@@ -102,3 +102,17 @@ body {
 .progress {
     /* margin-top: -7vh; */
 }
+/* 
+.form-control-my {
+    min-height: auto !important;
+    height: 38px !important;
+} */
+
+.input-group-append-sm {
+    height: 38px !important;
+}
+
+.input-group-append-sm button {
+    padding: 0.53rem 0.8rem !important;
+    margin-top: -2px;
+}

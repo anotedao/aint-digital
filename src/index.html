@@ -63,7 +63,7 @@
                     </div>
                     <p class="mb-1 fs-6 mt-2">Referred Users</p>
                     <div>
-                        <a href="javascript: void null;" id="referralButton" class="text-success">0 / 0</a>
+                        <a href="javascript: void null;" id="referralButton" class="text-success"><strong><span>0</span> / <span>0</span></strong></a>
                     </div>
                 </div>
             </div>
@@ -129,8 +129,17 @@
             </div>
         </div>
         <div id="referralView" style="display: none;">
-            <div>
-                Under construction.
+            <div class="mt-4">
+                <label for="refLink">Referral Link</label>
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-sm" type="text" placeholder="" id="refLink" readonly>
+                    <div class="input-group-append input-group-append-sm">
+                        <button class="btn btn-primary" type="button" id="refCopyButton">
+                            <i class="bi bi-files"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="copyMessage" class="form-text text-success" style="display: none;">Successfully copied referral link.</div>
             </div>
             <div class="mt-5"> 
                 <a href="javascript:void(0)" id="backButtonRef">
