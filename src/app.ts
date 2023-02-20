@@ -111,6 +111,11 @@ function setRefLink() {
 
         $("#refLink").val("https://anote.one/mine?r=" + ref);
     });
+
+    $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
+        $("#ref").html(data.referred);
+        $("#refa").html(data.active);
+    });
 }
 
 function loadMinerData() {
