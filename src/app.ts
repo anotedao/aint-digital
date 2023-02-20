@@ -102,7 +102,15 @@ if (address && address.length > 0 && address.startsWith("3A")) {
 }
 
 function setRefLink() {
-    $("#refLink").val("https://anote.one/mine?r=" + address);
+    var ref = address;
+    $.getJSON("https://node.anote.digital/alias/by-address/" + address, function (data) {
+        if (data.length > 0) {
+            var alias = String(data[0]).replace("alias:7:", "");
+            ref = alias;
+        }
+
+        $("#refLink").val("https://anote.one/mine?r=" + ref);
+    });
 }
 
 function loadMinerData() {
