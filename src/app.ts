@@ -377,6 +377,7 @@ $("#buttonMine").on("click", function() {
                 navigator.vibrate(500);
             } else if (data.success) {
                 isMiningScreen = true;
+                $("#cycleProgress").width("0%");
                 updateBlocks();
                 if (isServiceMining) {
                     startMiner();
