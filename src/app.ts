@@ -330,9 +330,21 @@ $("#addressButton").on("click", async function() {
             localStorage.setItem("seed", seed);
             localStorage.setItem("address", address);
 
+            $("#telegramLink").attr("href", "https://t.me/AnoteRobot?start=" + address);
+
             $("#profileView").fadeOut(function() {
-                $("#backButton").show();
-                loadMinerData();
+                $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
+                    has_telegram = data.has_telegram;
+
+                    if (has_telegram) {
+                        $("#backButton").show();
+                        loadMinerData();
+                    } else {
+                        $("#profileButton").hide();
+                        $("#telegramView").fadeIn();
+                        checkTelegram();
+                    }
+                });
             });
             try {
                 MyJavascriptInterface.saveAddress(address);
@@ -534,6 +546,7 @@ function checkTelegram() {
         has_telegram = data.has_telegram;
 
         if (has_telegram) {
+            $("#profileButton").fadeIn();
             loadMinerData();
         } else {
             setTimeout(checkTelegram, 5000);
