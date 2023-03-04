@@ -74,6 +74,7 @@ var nativeApp = false;
 var update = false;
 var countdownStarted = false;
 var version = 'v1.0-beta2';
+var has_telegram = false;
 
 if (urlParams.get('app') == 'true') {
     nativeApp = true;
@@ -86,11 +87,17 @@ if (urlParams.get('v') != version) {
 if (address && address.length > 0 && address.startsWith("3A")) {
     $("#seed").val(seed);
 
-    loadMinerData();
+    $("#telegramLink").attr("href", "https://t.me/AnoteRobot?start=" + address);
 
-    setRefLink();
+    $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
+        has_telegram = data.has_telegram;
 
-    // loadHealth();
+        console.log(has_telegram);
+
+        loadMinerData();
+
+        setRefLink();
+    });
 
     try {
         MyJavascriptInterface.saveAddress(address);
@@ -136,7 +143,13 @@ function loadMinerData() {
                     isMiningScreen = true;
                     startMiner();
 
-                    $("#mainView").fadeIn();
+                    if (has_telegram) {
+                        $("#mainView").fadeIn();
+                    } else {
+                        $("#profileButton").hide();
+                        $("#telegramView").fadeIn();
+                        checkTelegram();
+                    }
 
                     if (!nativeApp) {
                         startMiningWeb();
@@ -147,15 +160,33 @@ function loadMinerData() {
                         } catch (e: any) {}
                     }
                 } else if (currentHeight - miningHeight > 1410) {
-                    isMiningScreen = false;
-                    $("#mineView").show();
+                    if (has_telegram) {
+                        isMiningScreen = false;
+                        $("#mineView").show();
+                    } else {
+                        $("#profileButton").hide();
+                        $("#telegramView").fadeIn();
+                        checkTelegram();
+                    }
                 } else if (!isServiceMining) {
-                    isMiningScreen = true;
-                    $("#mainView").fadeIn();
+                    if (has_telegram) {
+                        isMiningScreen = true;
+                        $("#mainView").fadeIn();
+                    } else {
+                        $("#profileButton").hide();
+                        $("#telegramView").fadeIn();
+                        checkTelegram();
+                    }
                 }
             } else {
-                isMiningScreen = false;
-                $("#mineView").show();
+                if (has_telegram) {
+                    isMiningScreen = false;
+                    $("#mineView").show();
+                } else {
+                    $("#profileButton").hide();
+                    $("#telegramView").fadeIn();
+                    checkTelegram();
+                }
             }
 
             loadHealth();
@@ -495,5 +526,17 @@ function updateBlocks() {
                 }
             }
         });
+    });
+}
+
+function checkTelegram() {
+    $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
+        has_telegram = data.has_telegram;
+
+        if (has_telegram) {
+            loadMinerData();
+        } else {
+            setTimeout(checkTelegram, 5000);
+        }
     });
 }
