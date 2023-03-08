@@ -231,42 +231,57 @@ function loadHealth() {
     });
 }
 
-$("#startMiner").on("click", function() {
+$("#mineButton").on("click", function() {
     $(this).blur();
-    startMiner()
 
-    try {
-        MyJavascriptInterface.startMiner();
-    } catch (e: any) {}
+    if (isServiceMining) {
+        isServiceMining = false;
+        stopMiner();
 
-    if (!nativeApp) {
-        startMiningWeb();
+        try {
+            MyJavascriptInterface.stopMiner();
+        } catch (e: any) {}
+
+        if (!nativeApp) {
+            stopMiningWeb();
+        }        
+    } else {
+        isServiceMining = true;
+        startMiner()
+
+        try {
+            MyJavascriptInterface.startMiner();
+        } catch (e: any) {}
+    
+        if (!nativeApp) {
+            startMiningWeb();
+        }
     }
 });
 
-$("#stopMiner").on("click", function() {
-    $(this).blur();
-    stopMiner();
+// $("#stopMiner").on("click", function() {
+//     $(this).blur();
+//     stopMiner();
 
-    try {
-        MyJavascriptInterface.stopMiner();
-    } catch (e: any) {}
+//     try {
+//         MyJavascriptInterface.stopMiner();
+//     } catch (e: any) {}
 
-    if (!nativeApp) {
-        stopMiningWeb();
-    }
-});
+//     if (!nativeApp) {
+//         stopMiningWeb();
+//     }
+// });
 
 function startMiner() {
     tl.play();
-    $("#stopMiner > i").removeClass("text-danger");
-    $("#startMiner > i").addClass("text-success");
+    $("#mineButton > i").removeClass("text-danger");
+    $("#mineButton > i").addClass("text-success");
 }
 
 function stopMiner() {
     tl.pause();
-    $("#startMiner > i").removeClass("text-success");
-    $("#stopMiner > i").addClass("text-danger");
+    $("#mineButton > i").removeClass("text-success");
+    $("#mineButton > i").addClass("text-danger");
 }
 
 $("#profileButton").on("click", function() {

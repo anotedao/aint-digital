@@ -51,11 +51,11 @@ body {
 }
 
 .row-1 {
-    height: 52vh;
+    height: 48vh;
 }
 
 .row-2 {
-    height: 21vh;
+    height: 25vh;
 }
 
 .row-3 {
@@ -116,3 +116,7 @@ body {
     padding: 0.53rem 0.8rem !important;
     margin-top: -2px;
 }
+
+/* #referralButton {
+    vertical-align: bottom;
+} */
