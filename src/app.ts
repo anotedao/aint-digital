@@ -568,3 +568,13 @@ function checkTelegram() {
         }
     });
 }
+
+$("#inviteButton").on("click", function() {
+    $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
+        $("#inviteMessage").fadeIn(function() {
+            setTimeout(function() {
+                $("#inviteMessage").fadeOut();
+            }, 3000);
+        }); 
+    });
+});
