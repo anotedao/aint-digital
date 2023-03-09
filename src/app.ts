@@ -570,11 +570,19 @@ function checkTelegram() {
 }
 
 $("#inviteButton").on("click", function() {
-    $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
-        $("#inviteMessage").fadeIn(function() {
-            setTimeout(function() {
-                $("#inviteMessage").fadeOut();
-            }, 3000);
-        }); 
+    $.getJSON("https://mobile.anote.digital/invite/" + address, function(data) {
+        if (data.success) {
+            $("#inviteMessage").fadeIn(function() {
+                setTimeout(function() {
+                    $("#inviteMessage").fadeOut();
+                }, 3000);
+            }); 
+        } else {
+            $("#inviteErrMessage").fadeIn(function() {
+                setTimeout(function() {
+                    $("#inviteErrMessage").fadeOut();
+                }, 3000);
+            }); 
+        }
     });
 });
