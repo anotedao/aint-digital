@@ -105,6 +105,7 @@ if (address && address.length > 0 && address.startsWith("3A")) {
 } else {
     $("#mainView").hide();
     $("#backButton").hide();
+    $("#profileButton").hide();
     $("#profileView").show();
 }
 
@@ -180,6 +181,7 @@ function loadMinerData() {
                 }
             } else {
                 if (has_telegram) {
+                    $("#telegramView").hide();
                     isMiningScreen = false;
                     $("#mineView").show();
                 } else {
@@ -437,6 +439,7 @@ $("#buttonMine").on("click", function() {
                 isMiningScreen = true;
                 $("#cycleProgress").width("0%");
                 updateBlocks();
+                loadHealth();
                 if (isServiceMining) {
                     startMiner();
                     $("#mineView").fadeOut(function () {
@@ -561,8 +564,11 @@ function checkTelegram() {
         has_telegram = data.has_telegram;
 
         if (has_telegram) {
+            $("#telegramView").hide();
             $("#profileButton").fadeIn();
             loadMinerData();
+
+            setRefLink();
         } else {
             setTimeout(checkTelegram, 5000);
         }
