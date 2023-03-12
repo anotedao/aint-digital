@@ -78,6 +78,8 @@ var has_telegram = false;
 
 if (urlParams.get('app') == 'true') {
     nativeApp = true;
+} else {
+    isServiceMining = true;
 }
 
 if (urlParams.get('v') != version) {
@@ -236,28 +238,36 @@ function loadHealth() {
 $("#mineButton").on("click", function() {
     $(this).blur();
 
-    if (isServiceMining) {
-        isServiceMining = false;
-        stopMiner();
-
-        try {
-            MyJavascriptInterface.stopMiner();
-        } catch (e: any) {}
-
-        if (!nativeApp) {
-            stopMiningWeb();
-        }        
-    } else {
-        isServiceMining = true;
-        startMiner()
-
-        try {
-            MyJavascriptInterface.startMiner();
-        } catch (e: any) {}
+    if (nativeApp) {
+        if (isServiceMining) {
+            isServiceMining = false;
+            stopMiner();
     
-        if (!nativeApp) {
-            startMiningWeb();
+            try {
+                MyJavascriptInterface.stopMiner();
+            } catch (e: any) {}
+    
+            if (!nativeApp) {
+                stopMiningWeb();
+            }        
+        } else {
+            isServiceMining = true;
+            startMiner()
+    
+            try {
+                MyJavascriptInterface.startMiner();
+            } catch (e: any) {}
+        
+            if (!nativeApp) {
+                startMiningWeb();
+            }
         }
+    } else {
+        $("#msgError").fadeIn(function() {
+            setTimeout(function() {
+                $("#msgError").fadeOut();
+            }, 3000);
+        });
     }
 });
 
