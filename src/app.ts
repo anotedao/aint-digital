@@ -82,7 +82,7 @@ if (urlParams.get('app') == 'true') {
     isServiceMining = true;
 }
 
-if (urlParams.get('v') != version) {
+if (urlParams.get('v') != version && nativeApp) {
     update = true;
 }
 
