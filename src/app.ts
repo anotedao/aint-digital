@@ -73,7 +73,7 @@ var captchaId = "";
 var nativeApp = false;
 var update = false;
 var countdownStarted = false;
-var version = 'v1.0-beta2';
+var version = 'v1.0-beta3';
 var has_telegram = false;
 
 if (urlParams.get('app') == 'true') {
