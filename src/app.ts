@@ -223,7 +223,7 @@ function loadHealth() {
             $("#healthProgress").addClass("bg-danger");
         }
 
-        if (update && !data.updated_app) {
+        if (update) {
             $("#mainView").hide();
             $("#mineView").hide();
             $("#profileView").hide();
