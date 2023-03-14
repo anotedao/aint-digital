@@ -224,6 +224,9 @@ function loadHealth() {
         }
 
         if (update) {
+            try {
+                MyJavascriptInterface.stopMiner();
+            } catch (e: any) {}
             $("#mainView").hide();
             $("#mineView").hide();
             $("#profileView").hide();
