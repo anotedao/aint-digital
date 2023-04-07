@@ -157,8 +157,18 @@
             </div>
         </div>
         <div id="referralView" style="display: none;">
-            <p class="mb-1"><strong>Referred:</strong>&nbsp;&nbsp;&nbsp;&nbsp;<span id="ref">0</span></p>
-            <p><strong>Active:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="refa">0</span></p>
+            <div class="row">
+                <div class="col-3">
+                    <p class="mb-1"><strong>Referred:</strong></p>
+                    <p class="mb-1"><strong>Active:</strong></p>
+                    <p><strong>Confirmed:</strong></p>
+                </div>
+                <div class="col-9">
+                    <p class="mb-1"><span id="ref">0</span></p>
+                    <p class="mb-1"><span id="refa">0</span></p>
+                    <p><span id="refc">0</span></p>
+                </div>
+            </div>
             <div class="d-grid gap-2">
                 <button id="inviteButton" class="btn btn-block btn-success"><i class="bi bi-bell-fill"></i>&nbsp;&nbsp;Invite Inactive</button>
                 <div id="inviteMessage" class="form-text text-success" style="display: none;">Successfully invited inactive referred miners.</div>
