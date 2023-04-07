@@ -209,6 +209,14 @@ function loadMinerData() {
 
 function loadHealth() {
     $.getJSON("https://mobile.anote.digital/health/" + address, function (data) {
+        if (nativeApp) {
+            if (data.health == 100) {
+                $("#msgHealth").fadeOut();
+            } else {
+                $("#msgHealth").fadeIn();
+            }
+        }
+
         $("#healthProgress").width(data.health + "%");
         $("#healthPercentage").html(data.health);
 
