@@ -92,6 +92,10 @@ body {
     font-size: 2em;
 }
 
+#backButtonWallet i {
+    font-size: 2em;
+}
+
 .captcha-holder {
     background-color: #FFFFFF;
     border: 1px solid #ced4da;

@@ -91,6 +91,10 @@ if (address && address.length > 0 && address.startsWith("3A")) {
 
     $("#telegramLink").attr("href", "https://t.me/AnoteRobot?start=" + address);
 
+    $("#address").val(address);
+
+    loadBalance();
+
     $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
         has_telegram = data.has_telegram;
 
@@ -337,6 +341,13 @@ $("#backButtonRef").on("click", function() {
     });
 });
 
+$("#backButtonWallet").on("click", function() {
+    $("#walletView").fadeOut(function() {
+        $("#profileButton").fadeIn();
+        $("#mainView").fadeIn();
+    });
+});
+
 $("#addressButton").on("click", async function() {
     var seed = $("#seed").val();
     if (!seed || seed.length == 0) {
@@ -365,6 +376,8 @@ $("#addressButton").on("click", async function() {
             signer.setProvider(provider);
             var user = await signer.login();
             address = user.address;
+            $("#address").val(address);
+            loadBalance();
     
             localStorage.setItem("seed", seed);
             localStorage.setItem("address", address);
@@ -501,12 +514,29 @@ $("#referralButton").on("click", function() {
     });
 });
 
+$("#walletButton").on("click", function() {
+    $("#profileButton").fadeOut();
+    $("#mainView").fadeOut(function() {
+        $("#walletView").fadeIn();
+    });
+});
+
 $("#refCopyButton").on("click", function() {
     var link = $("#refLink").val();
     copy(String(link));
     $("#copyMessage").fadeIn(function () {
         setTimeout(function () {
             $("#copyMessage").fadeOut();
+        }, 500);
+    });
+});
+
+$("#addressCopyButton").on("click", function() {
+    var address = $("#address").val();
+    copy(String(address));
+    $("#addressMessage2").fadeIn(function () {
+        setTimeout(function () {
+            $("#addressMessage2").fadeOut();
         }, 500);
     });
 });
@@ -614,3 +644,9 @@ $("#inviteButton").on("click", function() {
         }
     });
 });
+
+function loadBalance() {
+    $.getJSON("https://node.anote.digital/addresses/balance/" + address, function(data) {
+        $("#balance").html((data.balance / 100000000).toFixed(8));
+    });
+}

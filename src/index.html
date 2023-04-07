@@ -84,7 +84,7 @@
             </div>
             <div class="row align-items-end row-3">
                 <div class="col text-start ps-4">
-                    <a href="https://anote.one" id="walletButton" target="_blank">
+                    <a href="javascript:void(0)" id="walletButton">
                         <i class="bi bi-wallet2 text-secondary text-primary fs-1"></i>
                     </a>
                 </div>
@@ -177,6 +177,25 @@
             </div>
             <div class="mt-4"> 
                 <a href="javascript:void(0)" id="backButtonRef">
+                    <i class="fa-solid fa-circle-chevron-left text-secondary"></i>
+                </a>
+            </div>
+        </div>
+        <div id="walletView" style="display: none;">
+            <p class="mb-1"><strong>Balance</strong></p>
+            <p class="mb-2"><span id="balance">0.00000000</span> ANOTES</p>
+            <label for="address" class="mb-1"><strong>Address</strong></label>
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-sm" type="text" placeholder="" id="address" readonly>
+                <div class="input-group-append input-group-append-sm">
+                    <button class="btn btn-primary" type="button" id="addressCopyButton">
+                        <i class="bi bi-files"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="addressMessage2" class="form-text text-success" style="display: none;">Successfully copied address.</div>
+            <div class="mt-4"> 
+                <a href="javascript:void(0)" id="backButtonWallet">
                     <i class="fa-solid fa-circle-chevron-left text-secondary"></i>
                 </a>
             </div>
