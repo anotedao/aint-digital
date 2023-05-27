@@ -147,7 +147,7 @@ function loadMinerData() {
                     var miningHeight = 0;
                 }
 
-                if (currentHeight - miningHeight <= 1410 && isServiceMining){
+                if (currentHeight - miningHeight <= 1409 && isServiceMining){
                     isMiningScreen = true;
                     startMiner();
 
@@ -167,7 +167,7 @@ function loadMinerData() {
                             MyJavascriptInterface.startMiner();
                         } catch (e: any) {}
                     }
-                } else if (currentHeight - miningHeight > 1410) {
+                } else if (currentHeight - miningHeight > 1409) {
                     if (has_telegram) {
                         isMiningScreen = false;
                         $("#mineView").show();
