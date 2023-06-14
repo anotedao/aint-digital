@@ -535,7 +535,7 @@ $("#addressCopyButton").on("click", function() {
 });
 
 $.getJSON("https://node.anote.digital/addresses/data/3ANmnLHt8mR9c36mdfQVpBtxUs8z1mMAHQW/%25s__adnum", function (data) {
-    $("#buttonCode").attr("href", "https://t.me/AnoteToday/" + data.value);
+    $("#buttonCode").attr("href", "https://t.me/AnoteAds/" + data.value);
 });
 
 var interval;
