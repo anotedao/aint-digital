@@ -127,7 +127,6 @@ function setRefLink() {
     $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
         $("#ref").html(data.referred);
         $("#refa").html(data.active);
-        $("#refc").html(data.confirmed);
     });
 }
 
