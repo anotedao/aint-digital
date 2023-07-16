@@ -121,7 +121,7 @@ function setRefLink() {
             ref = alias;
         }
 
-        $("#refLink").val("https://anote.one/mine?r=" + ref);
+        $("#refLink").val("https://anotedao.com/mine?r=" + ref);
     });
 
     $.getJSON("https://mobile.anote.digital/miner/" + address, function(data) {
@@ -455,7 +455,7 @@ $("#buttonMine").on("click", function() {
                 });
                 navigator.vibrate(500);
             } else if (data.error == 5) {
-                $("#errorMessage").html("There is something wrong with your address. Copy it from anote.one wallet (green button).");
+                $("#errorMessage").html("There is something wrong with your address. Copy it from app.anotedao.com wallet (green button).");
                 $("#errorMessage").fadeIn(function () {
                     setTimeout(function () {
                         $("#errorMessage").fadeOut();
